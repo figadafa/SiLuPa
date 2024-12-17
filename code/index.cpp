@@ -5,6 +5,7 @@
 #define FILENAME "silupa_databases.txt"
 
 typedef struct {
+     int periode_tanam;
     char tanggal_panen[50];
     char jenis_tanaman[50];
     char jenis_benih[50];
@@ -14,7 +15,7 @@ typedef struct {
 
 void welcomeMessage() {
     printf("====================================\n");
-    printf("Selamat Datang di Manajemen Toko Elektronik\n");
+    printf("Selamat Datang di SiLUPA\n");
     printf("====================================\n");
 }
 
@@ -26,36 +27,25 @@ void tambahProduk() {
     }
 
     Produk produk;
-    printf("Masukkan Tanggal Panen (DD-MM-YYYY): ");
-    scanf("%s", produk.tanggal_panen);
-
-    Produk temp;
-    int found = 0;
-    FILE *checkFile = fopen(FILENAME, "r");
-    while (fscanf(checkFile, "%s %s %s %f %d\n", temp.tanggal_panen, temp.jenis_tanaman, temp.jenis_benih, &temp.harga, &temp.stok) != EOF) {
-        if (strcmp(temp.tanggal_panen, produk.tanggal_panen) == 0) {
-            found = 1;
-            break;
-        }
-    }
-    fclose(checkFile);
-
-    if (found) {
-        printf("Tanggal Panen SUDAH TERDAFTAR. Silakan masukkan Tanggal Panen yang berbeda.\n");
-        fclose(file);
-        return;
-    }
-
-    printf("Masukkan Jenis Tanaman: ");
-    scanf("%s", produk.jenis_tanaman);
-    printf("Masukkan Jenis Benih: ");
-    scanf("%s", produk.jenis_benih);
-    printf("Masukkan Harga: ");
-    scanf("%f", &produk.harga);
-    printf("Masukkan Stok: ");
-    scanf("%d", &produk.stok);
-
-fprintf(file, "%s %s %s %.2f %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
+    printf("Masukkan Periode Tanam: ");
+    scanf("%s", produk.periode_tanam);
+//perulangan setaip periode akan mengulang sebanyak 4 kali
+    if(produk.periode_tanam>0){
+        for(int i =0;i<4;i++){
+             printf("Masukkan Tanggal Panen(DD/MM/YYYY): ");
+            scanf("%s", produk.tanggal_panen);
+            printf("Masukkan Jenis Tanaman: ");
+            scanf("%s", produk.jenis_tanaman);
+            printf("Masukkan Jenis Benih: ");
+            scanf("%s", produk.jenis_benih);
+            printf("Masukkan Harga: ");
+            scanf("%f", &produk.harga);
+            printf("Masukkan Berat Panen: ");
+            scanf("%d", &produk.stok);
+        }else{
+             printf("Masukan Periode yang sesuai);
+                 }
+fprintf(file, "%d %s %s %s %.2f %d\n", produk.periode_tanam,produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
 fclose(file);
 printf("Produk berhasil ditambahkan.\n");
 }
@@ -68,10 +58,10 @@ void tampilkanDaftarProduk() {
     }
 
     Produk produk;
-    printf("Daftar Produk:\n");
-    printf("%-15s %-15s %-15s %-15s %-10s\n", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Harga", "Stok");
+    printf("Daftar Isi Lumbung:\n");
+    printf("|%-15s|%-15s|%-15s|%-15s|%-10s\n|", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Harga", "Stok");
     while (fscanf(file, "%s %s %s %f %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, &produk.harga, &produk.stok) != EOF) {
-        printf("%-15s %-15s %-15s %-15.2f %-5d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
+        printf("|%-15s|%-15s|%-15s|%-15.2f %-5d\n|", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
     }
     fclose(file);
 }
