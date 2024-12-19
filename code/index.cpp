@@ -28,23 +28,25 @@ void tambahProduk() {
 
     Produk produk;
     printf("Masukkan Periode Panen: ");
-    scanf("%s", produk.periode_panen);
+    scanf("%d", &produk.periode_panen);
 
 
-     if (Periode_panen > 0) {
-        for (int i = 0; i < 4; i++) {
     printf("Masukkan Jenis Tanaman: ");
     scanf("%s", produk.jenis_tanaman);
     printf("Masukkan Jenis Benih: ");
     scanf("%s", produk.jenis_benih);
-    printf("Masukkan Harga: ");
-    scanf("%f", &produk.harga);
+    printf("Masukkan Tanggal panen: ");
+    scanf("%s", &produk.tanggal_panen);
     printf("Masukkan Berat Panen: ");
     scanf("%d", &produk.stok);
-        }
-fprintf(file, "%s %s %s %.2f %f\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
-fclose(file);
+        
+     
+     fprintf(file,"Daftar Produk:\n");
+    fprintf(file, "|%-15d|%-15s|%-15s|%-15s|%-15s|%-10s\n|", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Tanggal Panen", "Berat Panen");
+    fprintf(file, "|%-15d|%-15s|%-15s|%-15s|%-15.2f|%-5d\n|",produk.periode_panen, produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
+        
 printf("Produk berhasil ditambahkan.\n");
+     
 }
 
 void tampilkanDaftarProduk() {
@@ -53,12 +55,12 @@ void tampilkanDaftarProduk() {
         printf("Error: Tidak dapat membuka file.\n");
         return;
     }
-
+      
     Produk produk;
     printf("Daftar Produk:\n");
-    printf("|%-15s|%-15s|%-15s|%-15s|%-10s\n|", "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Harga", "Stok");
-    while (fscanf(file, "%s %s %s %f %d\n", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, &produk.harga, &produk.stok) != EOF) {
-        printf("|%-15s|%-15s|%-15s|%-15.2f|%-5d\n|", produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
+    printf("|%-15d|%-15s|%-15s|%-15s|%-15s|%-15s|%-10s\n|","Periode Panen" "Tanggal Panen", "Jenis Tanaman", "Jenis Benih", "Harga", "Stok");
+    while (fscanf(file, "%d %s %s %s %f %d\n",produk.periode_panen, produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, &produk.harga, &produk.stok) != EOF) {
+        printf("|%-15s|%-15s|%-15s|%-15.2f|%-5d\n|", produk.periode_panen, produk.tanggal_panen, produk.jenis_tanaman, produk.jenis_benih, produk.harga, produk.stok);
     }
     fclose(file);
 }
